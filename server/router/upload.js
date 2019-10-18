@@ -6,7 +6,6 @@ var connection = require('../db/dbconfig');
 var router = express.Router();
 const request = require('request-promise')
 
-console.log(request);
 
 function deleteFile(req) {
   fs.unlink(req.file.path, function(err){
@@ -15,12 +14,24 @@ function deleteFile(req) {
   });
 }
 
-function getInfo() {
-      
-    connection.query(`SELECT * FROM market`, function(err,rows){
-      if (err) throw err;
+function InsertDB(age,gender,value) {
 
-      console.log(rows);
+  //데이터 180개 인지 확인
+    console.log(value.length);
+    if(value.length != 180){
+        console.log(`Warnning : this data length is not 180`);
+    }
+    
+    var sql = "INSERT INTO braindata (age,gender,value,sec) VALUES (?,?,?,?)"; 
+    value.forEach((element)=>{
+        var params = [parseInt(age), parseInt(gender), parseFloat(element.value), parseInt(element.time)];
+        console.log(params);
+        connection.query(sql,params,function(err,rows){
+           if(err){
+             console.log(err);
+           }
+           console.log(rows.InsertId);
+        })
     })
 }
 
@@ -42,7 +53,7 @@ function timeCal(secTime, start_time){
   return Math.abs(end-start);
 }
 
-function brainCal(arr,age,sex,start_time,temp){
+function brainCal(arr,age,gender,start_time,temp){
   var index = temp[0];
   var brain_beta = temp[2];
   var brain_beta_2 = temp[7];
@@ -52,7 +63,6 @@ function brainCal(arr,age,sex,start_time,temp){
   var secTime = temp[12].split('.')[0];
   var time = timeCal(secTime, start_time);
 
-  
   if(arr[parseInt(time)]==undefined){
     arr[parseInt(time)] = 0;
   }
@@ -64,7 +74,7 @@ function brainCal(arr,age,sex,start_time,temp){
   return arr;
 }
 
-function parseFunction(data,age,sex,arr,size) {
+function parseFunction(data,age,gender,arr,size) {
   var sumArray = new Array(size);
   var zero_count = 0;
   var start_time = 0;
@@ -78,7 +88,7 @@ function parseFunction(data,age,sex,arr,size) {
 
       if(zero_count > 3){  
         if(temp.length > 3){
-          sumArray = brainCal(arr,age,sex,start_time,temp);
+          sumArray = brainCal(arr,age,gender,start_time,temp);
         }
       }else{
         if(temp.length > 3){
@@ -106,24 +116,25 @@ router.post('/create', upload.single('textfile'), (req,res,next)=>{
 
     //post로 나이와 성별 정보를 받음
     var age = req.body.age;
-    var sex = req.body.sex;
+    var gender = req.body.gender;
 
     var count = 1;
     var jsonarg = new Array();
     var jsonfile = new Object();
     jsonfile.age = age;
-    jsonfile.sex = sex;
+    jsonfile.gender = gender;
 
     //요기가 post로 넘어온 파일 내부에 string 읽어오는 부분
     fs.readFile(req.file.path,'utf-8',(err,data)=>{
  
-        answer = parseFunction(data,age,sex,arr,256);
+        answer = parseFunction(data,age,gender,arr,256);
         answer.forEach((value)=>{
           //1초에 256개의 개수가 들어오니까 256으로 나눠서 avg 구함
           jsonarg.push({ time : count++ , value : value/256.0})
         })
         
         jsonfile.value = jsonarg;
+        InsertDB(age,gender,jsonfile.value);
         res.send(JSON.stringify(jsonfile))
         res.end();
     })

@@ -6,6 +6,7 @@ var express =require('express')
 var ejs = require('ejs')
 var uploadRouter = require('./router/upload.js')
 var indexRouter = require('./router/index')
+var getRouter = require('./router/get.js')
 
 
 const swaggerSpec = require('./swaggerConfig')
@@ -25,6 +26,7 @@ app.set("view engine","ejs");
 app.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerSpec));
 app.use('/',indexRouter);
 app.use('/upload',uploadRouter);
+app.use('/get',getRouter);
 
 app.listen(port, function() {
   console.log(`listen ${port}`)
