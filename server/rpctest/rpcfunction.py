@@ -14,8 +14,6 @@ channel = connection.channel()
 
 channel.queue_declare(queue='rpc_queue')
 
-
-#여기 부분만 건들이시면 됩니다~
 def fib(n):
     return n
 
