@@ -3,13 +3,12 @@ version: "3"
 services:
   mysql:
     container_name: mysql
-    image: mysql:5.5.60
+    image: mysql:5.7
     restart: always
     volumes:
       - ./mysql/data:/var/lib/mysql
-      - ./mysql/conf/mysqld.conf:/etc/mysql/mysql.conf.d/mysqld.cnf
     ports:
-      - "3306:3306"
+      - 3306:3306
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=db
@@ -23,13 +22,12 @@ services:
       ports :
          - 8000:8080
   redis:
-    image: 'redis:3.2.11'
+    image: 'redis'
     restart: always
     hostname: redis
     container_name: redis
     ports:
       - '6379:6379'
-    command: redis-server --requirepass adminadmin
   rabbitmq:
     image: rabbitmq:3-management
     restart: always

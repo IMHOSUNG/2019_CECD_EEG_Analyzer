@@ -60,7 +60,8 @@ router.get('/brain/age/:id', (req,res,next)=>{
             }
 
             ch.assertQueue('' ,{
-                exclusive : true
+                exclusive : true,
+                autoDelete : true
             },function(error2, q){
                 if(error2){
                     throw error2;
@@ -82,6 +83,7 @@ router.get('/brain/age/:id', (req,res,next)=>{
                             console.log('[.] Got %s', msg.content.toString());
 
                             res.send(msg.content.toString());
+                            ch.close();
                         }
                     },{
                         noAck : true
