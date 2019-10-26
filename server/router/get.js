@@ -61,7 +61,7 @@ router.get('/brain/age/:id', (req,res,next)=>{
 
             ch.assertQueue('' ,{
                 exclusive : true,
-                autoDelete : true
+		autoDelete : true
             },function(error2, q){
                 if(error2){
                     throw error2;
@@ -70,7 +70,7 @@ router.get('/brain/age/:id', (req,res,next)=>{
                 var correlationId = generateUuID();
                 var age = req.params.id.toString();
 
-                var sql = 'SELECT * FROM braindata WHERE age=?'
+                var sql = 'SELECT `id`, `age`,`gender`, AVG(value) as value , `sec` FROM braindata WHERE age=? group by `sec`'
                 con.query(sql,age,function(err,data){
                     if(err){
                         console.log(err);
@@ -83,7 +83,8 @@ router.get('/brain/age/:id', (req,res,next)=>{
                             console.log('[.] Got %s', msg.content.toString());
 
                             res.send(msg.content.toString());
-                            ch.close();
+		            ch.close();
+			    connection.close();
                         }
                     },{
                         noAck : true
@@ -99,6 +100,7 @@ router.get('/brain/age/:id', (req,res,next)=>{
                 })
             })
         })
+	
     })
 
  //   console.log(getDataUsingAge(req.params.id));
@@ -126,7 +128,8 @@ router.get('/brain/gender/:id',(req,res,next)=>{
             }
 
             ch.assertQueue('' ,{
-                exclusive : true
+                exclusive : true,
+		autoDelete : true
             },function(error2, q){
                 if(error2){
                     throw error2;
@@ -135,7 +138,7 @@ router.get('/brain/gender/:id',(req,res,next)=>{
                 var correlationId = generateUuID();
                 var age = req.params.id.toString();
 
-                var sql = 'SELECT * FROM braindata WHERE gender=?'
+                var sql = 'SELECT `id`, `age`, `gender` , avg(value) as value, `sec` FROM braindata WHERE gender=? group by `sec`'
                 con.query(sql,age,function(err,data){
                     if(err){
                         console.log(err);
@@ -148,6 +151,8 @@ router.get('/brain/gender/:id',(req,res,next)=>{
                             console.log('[.] Got %s', msg.content.toString());
 
                             res.send(msg.content.toString());
+	                    ch.close();
+			    connection.close();
                         }
                     },{
                         noAck : true
@@ -187,7 +192,9 @@ router.get('/brain/all',(req,res,next)=>{
             }
 
             ch.assertQueue('' ,{
-                exclusive : true
+		durable:false,
+                exclusive : true,
+		autoDelete : true
             },function(error2, q){
                 if(error2){
                     throw error2;
@@ -195,7 +202,7 @@ router.get('/brain/all',(req,res,next)=>{
 
                 var correlationId = generateUuID();
 
-                var sql = 'SELECT * FROM braindata'
+                var sql = 'SELECT `id`, `age`, `gender`,avg(value) as value , `sec`  FROM braindata group by `sec`'
                 con.query(sql,function(err,data){
                     if(err){
                         console.log(err);
@@ -208,6 +215,8 @@ router.get('/brain/all',(req,res,next)=>{
                             console.log('[.] Got %s', msg.content.toString());
 
                             res.send(msg.content.toString());
+		            ch.close();
+			    connection.close();
                         }
                     },{
                         noAck : true
@@ -224,6 +233,7 @@ router.get('/brain/all',(req,res,next)=>{
             })
         })
     })
+     
 })
 
 module.exports = router
