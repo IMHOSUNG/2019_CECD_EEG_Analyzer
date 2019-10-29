@@ -6,6 +6,8 @@ import RawData from "../components/RawData";
 import Trend from "../components/Trend";
 import Gender from "../components/Gender";
 import Age from "../components/Age";
+import { connect } from "react-redux";
+import { getData } from "../modules/overview";
 
 const PageContainer = styled("div")`
   background-color: #f0f3f7;
@@ -69,30 +71,33 @@ Apex = {
   }
 };
 
-const OverviewPage = () => {
+const OverviewPage = ({ data, loadingData, getData }) => {
+  React.useEffect(() => {
+    getData();
+  }, [getData]);
+  console.log(loadingData);
+  console.log(data);
   return (
     <PageContainer>
       <Row>
-        <Content lg={12}>
-          <RawData />
-        </Content>
-        <Content lg={12}>
-          <Decomposition />
-        </Content>
+        <Content lg={12}>{!loadingData && <RawData />}</Content>
+        <Content lg={12}>{!loadingData && <Decomposition />}</Content>
       </Row>
       <Row>
-        <Content lg={6}>
-          <Gender />
-        </Content>
-        <Content lg={6}>
-          <Age />
-        </Content>
-        <Content lg={12}>
-          <Trend />
-        </Content>
+        <Content lg={6}>{!loadingData && <Gender />}</Content>
+        <Content lg={6}>{!loadingData && <Age />}</Content>
+        <Content lg={12}>{!loadingData && <Trend />}</Content>
       </Row>
     </PageContainer>
   );
 };
 
-export default OverviewPage;
+export default connect(
+  ({ overview }) => ({
+    data: overview.data,
+    loadingData: overview.loading.GET_DATA
+  }),
+  {
+    getData
+  }
+)(OverviewPage);

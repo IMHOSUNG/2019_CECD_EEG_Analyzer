@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Card } from "antd";
 import ReactApexChart from "react-apexcharts";
-import dummy from "../../data.json";
+import dummy from "../data.json";
 
 const arr = [];
 
