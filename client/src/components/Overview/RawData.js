@@ -3,10 +3,13 @@ import { Card } from "antd";
 import styled from "styled-components";
 import ReactApexChart from "react-apexcharts";
 
-const arr = [];
-for (let i = 1; i <= 180; i++) {
-  arr.push([i, Math.floor(Math.random() * 100 + 1)]);
-}
+const makeSeries = obj => {
+  let arr = [];
+  for (let i = 0; i < obj.length; i++) {
+    arr.push(obj[i].value);
+  }
+  return arr;
+};
 
 const options = {
   chartOptionsArea: {
@@ -65,13 +68,12 @@ const options = {
   }
 };
 
-const series = [
-  {
-    data: arr.slice()
-  }
-];
-
-const RawData = () => {
+const RawData = ({ object }) => {
+  const series = [
+    {
+      data: makeSeries(object.brainRawValue)
+    }
+  ];
   return (
     <Container title={<Title>Raw EEG Data</Title>} hoverable bordered={true}>
       <ReactApexChart

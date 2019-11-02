@@ -8,7 +8,7 @@ const PageContainer = styled("div")`
   display: flex;
   justify-content: center;
   padding-top: 100px;
-  height: 900px;
+  height: 750px;
 `;
 
 const Container = styled(Card)`

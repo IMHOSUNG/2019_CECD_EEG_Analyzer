@@ -41,20 +41,19 @@ const options = {
   }
 };
 
-const series = {
-  seasonal: [
-    {
-      data: arr
-    }
-  ],
-  residuals: [
-    {
-      data: arr
-    }
-  ]
-};
-
-const Decomposition = () => {
+const Decomposition = ({ object }) => {
+  const series = {
+    seasonal: [
+      {
+        data: object.seasonalValue.seasonal
+      }
+    ],
+    residuals: [
+      {
+        data: object.seasonalValue.resid
+      }
+    ]
+  };
   return (
     <ComponentContainer
       title={<Title>Seasonal & Residuals </Title>}

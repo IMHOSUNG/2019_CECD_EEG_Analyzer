@@ -1,11 +1,11 @@
 import React from "react";
 import { Col, Row } from "antd";
 import styled from "styled-components";
-import Decomposition from "../components/Decomposition";
-import RawData from "../components/RawData";
-import Trend from "../components/Trend";
-import Gender from "../components/Gender";
-import Age from "../components/Age";
+import Decomposition from "../components/Overview/Decomposition";
+import RawData from "../components/Overview/RawData";
+import Trend from "../components/Overview/Trend";
+import Gender from "../components/Overview/Gender";
+import Age from "../components/Overview/Age";
 import { connect } from "react-redux";
 import { getData } from "../modules/overview";
 
@@ -49,7 +49,7 @@ Apex = {
     },
     y: {
       title: {
-        formatter: function() {
+        formatter: () => {
           return "";
         }
       }
@@ -64,7 +64,7 @@ Apex = {
   xaxis: {
     type: "numeric",
     labels: {
-      formatter: function(value) {
+      formatter: value => {
         return `${Math.floor(value / 60)}:${Math.floor(value % 60)}`;
       }
     }
@@ -75,18 +75,27 @@ const OverviewPage = ({ data, loadingData, getData }) => {
   React.useEffect(() => {
     getData();
   }, [getData]);
-  console.log(loadingData);
-  console.log(data);
+
   return (
     <PageContainer>
       <Row>
-        <Content lg={12}>{!loadingData && <RawData />}</Content>
-        <Content lg={12}>{!loadingData && <Decomposition />}</Content>
+        <Content lg={12}>
+          {!loadingData && data && <RawData object={data} />}
+        </Content>
+        <Content lg={12}>
+          {!loadingData && data && <Decomposition object={data} />}
+        </Content>
       </Row>
       <Row>
-        <Content lg={6}>{!loadingData && <Gender />}</Content>
-        <Content lg={6}>{!loadingData && <Age />}</Content>
-        <Content lg={12}>{!loadingData && <Trend />}</Content>
+        <Content lg={6}>
+          {!loadingData && data && <Gender object={data} />}
+        </Content>
+        <Content lg={6}>
+          {!loadingData && data && <Age object={data} />}
+        </Content>
+        <Content lg={12}>
+          {!loadingData && data && <Trend object={data} />}
+        </Content>
       </Row>
     </PageContainer>
   );

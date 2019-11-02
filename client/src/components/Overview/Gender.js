@@ -13,7 +13,7 @@ const options = {
   },
   dataLabels: {
     enabled: true,
-    formatter: function(val, opt) {
+    formatter: (val, opt) => {
       return (
         opt.w.globals.labels[opt.seriesIndex] + ": " + Math.floor(val) + "%"
       );
