@@ -30,15 +30,6 @@ const options = {
   }
 };
 
-const Age = () => {
-  return (
-    <Container title={<Title>Age</Title>} hoverable bordered={true}>
-      <ReactApexChart options={options} series={series} type="donut" />
-    </Container>
-  );
-};
-export default Age;
-
 const Container = styled(Card)`
   width: 450px;
   height: 430px;
@@ -47,3 +38,12 @@ const Container = styled(Card)`
 const Title = styled("span")`
   font-size: 18px;
 `;
+
+const Age = () => {
+  return (
+    <Container title={<Title>Age</Title>} hoverable bordered={true}>
+      <ReactApexChart options={options} series={series} type="donut" />
+    </Container>
+  );
+};
+export default Age;

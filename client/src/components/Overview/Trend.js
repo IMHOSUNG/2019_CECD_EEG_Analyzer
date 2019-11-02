@@ -2,18 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Card } from "antd";
 import ReactApexChart from "react-apexcharts";
-import dummy from "../data.json";
 
-const arr = [];
-
-for (let i = 1; i < dummy.value.length; i++) {
-  arr.push([i, dummy.value[i].value]);
-}
-/*
-for (let i = 1; i <= 180; i++) {
-  arr.push([i, i + 1]);
-}
-*/
 const options = {
   chart: {
     zoom: {
@@ -49,14 +38,13 @@ const options = {
   }
 };
 
-const series = [
-  {
-    name: "Trend",
-    data: arr
-  }
-];
-
-const Trend = () => {
+const Trend = ({ object }) => {
+  const series = [
+    {
+      name: "Trend",
+      data: object.seasonalValue.trend
+    }
+  ];
   return (
     <Container title={<Title>Trend in EEG</Title>} hoverable bordered={true}>
       <ReactApexChart
