@@ -15,9 +15,8 @@ const router = express.Router();
  *         description: An array of users
  */
 router.get('/', (req,res,next)=>{
-
     console.log('access / ');
-    res.send(200);
+    res.sendStatus(200);
 });
 
 module.exports = router
