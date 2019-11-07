@@ -4,7 +4,8 @@
   "description": "stream server example",
   "main": "./server/index.js",
   "scripts": {
-    "start": "nodemon ./server/start.js"
+    "start": "nodemon ./server/start.js",
+    "testrpc": "nodemon ./server/rpctest/testRpc.js"
   },
   "repository": "https://github.com/IMHOSUNG/STREAM_BIG_TEXT.git",
   "author": "IMHOSUNG <dlaghtjd4487@naver.com>",

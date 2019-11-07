@@ -6,8 +6,9 @@
 
 사용 방법
 1. docker-compose up -d
-2. 서버 실행은 npm start
-3. rpc function 실행은 python3 rpcfunction.py 로 실행
+2. yarn 또는 npm install
+3. 서버 실행은 yarn start 또는 npm start
+4. rpc function 실행은 rpcfunction 위치로 가서 python3 rpcfunction.py 로 실행
 
 
     
