@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon ./server/start.js",
     "testrpc": "nodemon ./server/rpctest/testRpc.js",
-    "rpc" : "python3 ./server/rpctest/rpcfunction.py"
+    "rpc": "python3 ./server/rpctest/rpcfunction.py"
   },
   "repository": "https://github.com/IMHOSUNG/STREAM_BIG_TEXT.git",
   "author": "IMHOSUNG <dlaghtjd4487@naver.com>",
@@ -22,7 +22,8 @@
     "express": "^4.17.1",
     "multer": "^1.4.2",
     "mysql": "^2.17.1",
-    "nodemon": "^1.19.4"
+    "nodemon": "^1.19.4",
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.0",

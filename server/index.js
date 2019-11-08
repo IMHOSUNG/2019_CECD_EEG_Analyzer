@@ -1,7 +1,6 @@
-
-import { join } from 'path';
 import express, { urlencoded, json } from 'express';
 import ejs from 'ejs';
+import { join } from 'path';
 import postRouter from './router/post.js';
 import indexRouter from './router/index';
 import getRouter from './router/get.js';

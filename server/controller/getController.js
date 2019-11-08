@@ -19,7 +19,7 @@ export const getOverView = async(req,res)=>{
 
     let returnData = {
         "age" : ageAvgCount,
-        "gender " : genderAvgCount,
+        "gender" : genderAvgCount,
         "brainRawValue" : brainBetaAvgValue,
         "seasonalValue" : null
     };

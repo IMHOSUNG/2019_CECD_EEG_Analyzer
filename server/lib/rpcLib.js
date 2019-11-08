@@ -11,7 +11,12 @@ export const remoteCall = async(returnData, res) => {
         exclusive : true,
         autoDelete : true
     });
-    +
+    
+    // RawValue 가 30보다 작을 때에는 return {} 처리
+    if(returnData.brainRawValue.length < 30){
+        return {};
+    }
+
     console.log('[x] Requesting Python Deamon %s', returnData);
     let ret = new Promise((resolve,reject)=>{
         ch.consume(q.queue,
