@@ -5,7 +5,8 @@
   "main": "./server/index.js",
   "scripts": {
     "start": "nodemon ./server/start.js",
-    "testrpc": "nodemon ./server/rpctest/testRpc.js"
+    "testrpc": "nodemon ./server/rpctest/testRpc.js",
+    "rpc" : "python3 ./server/rpctest/rpcfunction.py"
   },
   "repository": "https://github.com/IMHOSUNG/STREAM_BIG_TEXT.git",
   "author": "IMHOSUNG <dlaghtjd4487@naver.com>",
