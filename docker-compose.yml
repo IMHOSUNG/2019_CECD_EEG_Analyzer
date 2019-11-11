@@ -9,6 +9,8 @@ services:
       - ./mysql/data:/var/lib/mysql
     ports:
       - 3306:3306
+    args:
+      - wait_timeout=28800
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=db

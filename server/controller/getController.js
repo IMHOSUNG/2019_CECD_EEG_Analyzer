@@ -1,5 +1,6 @@
 import { getDataFromDB } from '../db/function';
-import { remoteCall } from '../lib/rpcLib'
+import { remoteCall } from '../lib/rpcLib';
+import { calInclination } from '../lib/lib'
 
 export const getIndex = (req,res,next) => {
     const test = "access /upload router"
@@ -21,10 +22,12 @@ export const getOverView = async(req,res)=>{
         "age" : ageAvgCount,
         "gender" : genderAvgCount,
         "brainRawValue" : brainBetaAvgValue,
-        "seasonalValue" : null
+        "seasonalValue" : null,
+        "inclination" : null,
     };
 
     let ret = await remoteCall(returnData, res);
+    returnData.inclination = calInclination(returnData.seasonalValue);
     res.send(ret);
 }
 
@@ -44,9 +47,11 @@ export const getDataAboutAge = async(req,res) => {
             "count" : element.count,
             "gender" : genderAvgCount,
             "brainRawValue" : brainBetaAvgValue,
-            "seasonalValue" : null
+            "seasonalValue" : null,
+            "inclination" : null,
         };
         let ret = await remoteCall(returnData, res);
+        //ret['inclination'] = calInclination(ret.seasonalValue);
         json[element.age] = ret;
     }
 
@@ -74,6 +79,7 @@ export const getDataAboutGender = async(req,res) => {
             "seasonalValue" : null
         };
         let ret = await remoteCall(returnData, res);
+        //ret['inclination'] = calInclination(ret.seasonalValue);
         json[element.gender] = ret;
     }
 

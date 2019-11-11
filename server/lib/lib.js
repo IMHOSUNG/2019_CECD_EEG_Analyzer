@@ -51,3 +51,20 @@ export const brainCal = (arr,age,gender,start_time,temp) => {
     return arr;
 }
 
+export const calInclination = (data) => {
+
+  let json = {
+    "positiveMax" : 0,
+    "positiveMin" : 0,
+    "nagativeMax" : 0,
+    "nagativeMin" : 0,
+    "array" : []
+  };
+
+  for(let i = 0 ; i < data.trend.length - 1 ; ++i){
+    json.array.push(data.trend[i+1]-data.trend[i]);
+  }
+  
+  return json;
+}
+
