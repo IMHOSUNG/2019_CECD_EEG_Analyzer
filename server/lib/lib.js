@@ -1,4 +1,5 @@
 import * as fs from 'fs'
+import { MAX_UNSIGNED_VALUE } from 'long';
 
 export const deleteFile = (req) => {
     fs.unlink(req.file.path, function(err){
@@ -53,17 +54,30 @@ export const brainCal = (arr,age,gender,start_time,temp) => {
 
 export const calInclination = (data) => {
 
+  let postiveArr = [];
+  let nagativeArr = [];
   let json = {
-    "positiveMax" : 0,
-    "positiveMin" : 0,
-    "nagativeMax" : 0,
-    "nagativeMin" : 0,
-    "array" : []
+    "PostiveMaxTime" : null,
+    "PostiveMinTime" : null,
+    "NagativeMaxTime" : null,
+    "NagativeMinTime" : null, 
+    "AllArr" : [],
   };
 
   for(let i = 0 ; i < data.trend.length - 1 ; ++i){
-    json.array.push(data.trend[i+1]-data.trend[i]);
+    let value = data.trend[i+1]-data.trend[i];
+    if(value > 0){
+      postiveArr.push(value);
+    }else{
+      nagativeArr.push(value);
+    }
+    json.AllArr.push(value);
   }
+
+  json.PostiveMaxTime = json.AllArr.indexOf(Math.max(...postiveArr));
+  json.PostiveMinTime = json.AllArr.indexOf(Math.min(...postiveArr));
+  json.NagativeMaxTime = json.AllArr.indexOf(Math.max(...nagativeArr));
+  json.NagativeMinTime = json.AllArr.indexOf(Math.min(...nagativeArr));
   
   return json;
 }

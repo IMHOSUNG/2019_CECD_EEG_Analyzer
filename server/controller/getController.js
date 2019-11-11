@@ -27,7 +27,7 @@ export const getOverView = async(req,res)=>{
     };
 
     let ret = await remoteCall(returnData, res);
-    returnData.inclination = calInclination(returnData.seasonalValue);
+    ret.inclination = calInclination(ret.seasonalValue);
     res.send(ret);
 }
 
