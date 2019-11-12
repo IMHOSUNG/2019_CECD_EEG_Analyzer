@@ -21,7 +21,7 @@ const CustomProgress = styled(Progress)`
   }
 `;
 
-const Percentage = ({ boundary, percent, color }) => {
+const Percentage = ({ boundary, percent, color, count }) => {
   return (
     <Container
       title={<Title>{boundary}</Title>}
@@ -29,7 +29,7 @@ const Percentage = ({ boundary, percent, color }) => {
       hoverable
       onClick={() => console.log("a")}
       bordered={true}
-      actions={[<Statistic title="Trend by" value={`${12}명`} />]}
+      actions={[<Statistic title="Trend by" value={`${count}명`} />]}
     >
       <CustomProgress type="circle" strokeColor={color} percent={percent} />
     </Container>

@@ -9,6 +9,7 @@ const options = {
       enabled: false
     }
   },
+  colors: ["black"],
   markers: {
     size: 0,
     style: "hollow"
@@ -35,6 +36,9 @@ const options = {
         return `${Math.floor(value / 60)}:${Math.floor(value % 60)}`;
       }
     }
+  },
+  yaxis: {
+    show: false
   }
 };
 
@@ -46,7 +50,7 @@ const Trend = ({ object }) => {
     }
   ];
   return (
-    <Container title={<Title>Trend in EEG</Title>} hoverable bordered={true}>
+    <Container title={<Title>트렌드 데이터</Title>} hoverable bordered={true}>
       <ReactApexChart
         options={options}
         series={series}

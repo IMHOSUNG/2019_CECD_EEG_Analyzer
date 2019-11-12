@@ -1,16 +1,17 @@
 import React from "react";
 import { Col, Row } from "antd";
 import styled from "styled-components";
-import Decomposition from "../components/Overview/Decomposition";
 import RawData from "../components/Overview/RawData";
 import Trend from "../components/Overview/Trend";
 import Gender from "../components/Overview/Gender";
 import Age from "../components/Overview/Age";
+import Recommend from "../components/Overview/Recommend";
 import { connect } from "react-redux";
 import { getData } from "../modules/overview";
 
 const PageContainer = styled("div")`
   background-color: #f0f3f7;
+  height: 960px;
 `;
 
 const Content = styled(Col)`
@@ -75,23 +76,23 @@ const OverviewPage = ({ data, loadingData, getData }) => {
   React.useEffect(() => {
     getData();
   }, [getData]);
-
+  console.log(data);
   return (
     <PageContainer>
       <Row>
-        <Content lg={12}>
-          {!loadingData && data && <RawData object={data} />}
+        <Content lg={6}>
+          {!loadingData && data && <Age object={data} />}
         </Content>
-        <Content lg={12}>
-          {!loadingData && data && <Decomposition object={data} />}
-        </Content>
-      </Row>
-      <Row>
         <Content lg={6}>
           {!loadingData && data && <Gender object={data} />}
         </Content>
-        <Content lg={6}>
-          {!loadingData && data && <Age object={data} />}
+        <Content lg={12}>
+          {!loadingData && data && <RawData object={data} />}
+        </Content>
+      </Row>
+      <Row>
+        <Content lg={12}>
+          {!loadingData && data && <Recommend object={data} />}
         </Content>
         <Content lg={12}>
           {!loadingData && data && <Trend object={data} />}

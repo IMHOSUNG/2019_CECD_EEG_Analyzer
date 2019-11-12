@@ -3,9 +3,8 @@ import styled from "styled-components";
 import ReactApexChart from "react-apexcharts";
 import { Card } from "antd";
 
-const series = [44, 55, 41, 17, 15];
 const options = {
-  labels: ["10대", "20대", "30대", "40대", "50대"],
+  labels: ["10대", "20대", "30대", "40대"],
   plotOptions: {
     pie: {
       donut: {
@@ -39,9 +38,15 @@ const Title = styled("span")`
   font-size: 18px;
 `;
 
-const Age = () => {
+const Age = ({ object }) => {
+  const series = [
+    object.age[0].count,
+    object.age[1].count,
+    object.age[2].count,
+    object.age[3].count
+  ];
   return (
-    <Container title={<Title>Age</Title>} hoverable bordered={true}>
+    <Container title={<Title>연령 대 분포</Title>} hoverable bordered={true}>
       <ReactApexChart options={options} series={series} type="donut" />
     </Container>
   );
