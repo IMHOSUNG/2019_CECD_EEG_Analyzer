@@ -7,7 +7,7 @@ const options = {
   labels: ["남성", "여성"],
   plotOptions: {
     pie: {
-      size: 155,
+      size: 140,
       expandOnClick: true
     }
   },
@@ -27,11 +27,11 @@ const options = {
   }
 };
 
-const series = [70, 30];
+const Gender = ({ object }) => {
+  const series = [object.gender[0].count, object.gender[1].count];
 
-const Gender = () => {
   return (
-    <Container title={<Title>Gender</Title>} hoverable bordered={true}>
+    <Container title={<Title>성별 분포</Title>} hoverable bordered={true}>
       <ReactApexChart options={options} series={series} type="pie" />
     </Container>
   );

@@ -63,7 +63,7 @@ const options = {
       }
     },
     yaxis: {
-      tickAmount: 2
+      show: false
     }
   }
 };
@@ -75,7 +75,7 @@ const RawData = ({ object }) => {
     }
   ];
   return (
-    <Container title={<Title>Raw EEG Data</Title>} hoverable bordered={true}>
+    <Container title={<Title>베타파 데이터</Title>} hoverable bordered={true}>
       <ReactApexChart
         options={options.chartOptionsArea}
         series={series}

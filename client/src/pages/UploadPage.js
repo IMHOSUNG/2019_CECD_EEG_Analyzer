@@ -8,7 +8,7 @@ const PageContainer = styled("div")`
   display: flex;
   justify-content: center;
   padding-top: 100px;
-  height: 750px;
+  height: 960px;
 `;
 
 const Container = styled(Card)`
@@ -31,26 +31,28 @@ const UploadPage = props => {
   const setGender = text => {
     gender.current = text;
   };
-  const setFile = obj => {
-    file.current = obj;
+  const setFile = filename => {
+    file.current = filename;
   };
   const handleSubmit = e => {
     e.preventDefault();
     props.form.validateFields((err, values) => {
-      if (!err) {
+      if (!err && file) {
         console.log("Received values of form: ", values);
         setAge(values.age);
         setGender(values.gender);
+        updateFile();
       }
     });
-    updateFile();
   };
   const handleFileInput = e => {
-    setFile(e.target.files[0]);
+    if (e.target.files[0]) setFile(e.target.files[0]);
   };
 
   const updateFile = () => {
-    const url = "http://localhost:5000/upload/update";
+    const url =
+      "https://cors-anywhere.herokuapp.com/" +
+      "http://3.95.225.208:3000/post/create";
     const formData = new FormData();
     formData.append("age", age.current);
     formData.append("gender", gender.current);
@@ -60,13 +62,21 @@ const UploadPage = props => {
         "content-type": "multipart/form-data"
       }
     };
-    return post(url, formData, config);
+    return post(url, formData, config)
+      .then(response => {
+        console.log(response);
+        setFile(null);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   const formItemLayout = {
     labelCol: { span: 4 },
     wrapperCol: { span: 16 }
   };
+
   return (
     <PageContainer>
       <Container title={<Title>UPLOAD</Title>} hoverable bordered={true}>
@@ -82,14 +92,15 @@ const UploadPage = props => {
           <Form.Item label="연령" type="text">
             {getFieldDecorator("age")(
               <Slider
+                min={10}
+                max={49}
                 type="text"
                 marks={{
-                  0: "0",
+                  10: "10",
                   20: "20",
+                  30: "30",
                   40: "40",
-                  60: "60",
-                  80: "80",
-                  100: "100"
+                  50: "50"
                 }}
               />
             )}

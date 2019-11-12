@@ -18,13 +18,13 @@ const CustomProgress = styled(Progress)`
   }
 `;
 
-const Percentage = ({ name, percent, color }) => {
+const Percentage = ({ name, percent, color, value }) => {
   return (
     <Container
       title={<Title>{name}</Title>}
       hoverable
       bordered={true}
-      actions={[<Statistic title="Trend by" value={`${12}명`} />]}
+      actions={[<Statistic title="Trend by" value={`${value}명`} />]}
     >
       <CustomProgress
         type="circle"
